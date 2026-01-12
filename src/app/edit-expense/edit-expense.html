@@ -1,18 +1,48 @@
-<form>
-  <mat-form-field class="example-full-width">
-    <mat-label>Number</mat-label>
+<form [formGroup]="_form" class="flex flex-col max-w-lg mx-auto my-4 gap-4">
+  <mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="w-full">
+    <mat-label>Merchant or Category</mat-label>
     <input
+      formControlName="target"
       type="text"
       placeholder="Pick one"
-      aria-label="Number"
       matInput
-      [formControl]="myControl"
       [matAutocomplete]="auto"
     />
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      @for (option of filteredOptions | async; track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (merchant of merchants$ | async; track merchant.target + merchant.id) {
+      <mat-option [value]="{ target: merchant.target, id: merchant.id }">{{
+        merchant.name
+      }}</mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>
+
+  <div>
+    <mat-form-field floatLabel="always">
+      <mat-label>Amount</mat-label>
+      <input
+        formControlName="amount"
+        type="number"
+        class="example-right-align"
+        matInput
+        placeholder="0"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Currency</mat-label>
+      <mat-select formControlName="currency">
+        @for (currency of currencies; track currency) {
+        <mat-option [value]="currency">{{ currency }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 </form>

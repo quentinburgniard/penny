@@ -1,0 +1,6 @@
+{
+  "/v5": {
+    "target": "https://api.preview.digitalleman.com",
+    "changeOrigin": true
+  }
+}
