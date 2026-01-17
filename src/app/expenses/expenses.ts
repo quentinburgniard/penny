@@ -24,6 +24,7 @@ export class Expenses {
         params: {
           populate: ['merchant', 'category', 'project'],
         },
+        withCredentials: true,
       })
       .pipe(map(({ data }) => data));
   }

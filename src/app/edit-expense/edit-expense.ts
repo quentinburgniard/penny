@@ -69,12 +69,12 @@ export class EditExpense implements OnInit {
   constructor(private readonly http: HttpClient) {
     this.merchants$ = forkJoin({
       merchants: this.http
-        .get<{ data: any }>(`${environment.apiBaseUrl}/merchants`)
+        .get<{ data: any }>(`${environment.apiBaseUrl}/merchants`, { withCredentials: true })
         .pipe(map(({ data }) => data)),
       categories: this.http
         .get<{
           data: any;
-        }>(`${environment.apiBaseUrl}/merchant-categories`)
+        }>(`${environment.apiBaseUrl}/merchant-categories`, { withCredentials: true })
         .pipe(map(({ data }) => data)),
     }).pipe(
       map(({ merchants, categories }) => [
