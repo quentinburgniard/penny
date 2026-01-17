@@ -1,6 +1,9 @@
 {
-  "/v5": {
+  "/api": {
     "target": "https://api.preview.digitalleman.com",
-    "changeOrigin": true
+    "changeOrigin": true,
+    "headers": {
+      "Authorization": "Bearer ***"
+    }
   }
 }
