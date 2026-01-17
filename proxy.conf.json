@@ -1,9 +1,12 @@
 {
   "/api": {
-    "target": "https://api.preview.digitalleman.com",
+    "target": "https://api.preview.digitalleman.com/v5",
     "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    },
     "headers": {
-      "Authorization": "Bearer ***"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzY4MjQ4NjY0LCJleHAiOjE3Njg4NTM0NjR9.spDgkFKMnSOXFEB-aqv2E673NTsBsVggcFuGbm29ac8"
     }
   }
 }

@@ -10,8 +10,24 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import {
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { environment } from '../../environments/environment';
+
+const EURO_DATE_FORMATS = {
+  parse: {
+    dateInput: 'dd/MM/yyyy',
+  },
+  display: {
+    dateInput: 'dd/MM/yyyy',
+    monthYearLabel: 'MMM yyyy',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM yyyy',
+  },
+};
 
 @Component({
   selector: 'penny-edit-expense',
@@ -24,7 +40,11 @@ import { environment } from '../../environments/environment';
     MatAutocompleteModule,
     MatDatepickerModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: MAT_DATE_FORMATS, useValue: EURO_DATE_FORMATS },
+  ],
   templateUrl: './edit-expense.html',
   styleUrl: './edit-expense.css',
 })
@@ -47,22 +67,21 @@ export class EditExpense implements OnInit {
   constructor(private readonly http: HttpClient) {
     this.merchants$ = forkJoin({
       merchants: this.http
-        .get<{ data: any }>(`${environment.apiBaseUrl}/merchants`, environment.httpOptions)
+        .get<{ data: any }>(`${environment.apiBaseUrl}/merchants`)
         .pipe(map(({ data }) => data)),
       categories: this.http
-        .get<{ data: any }>(
-          `${environment.apiBaseUrl}/merchant-categories`,
-          environment.httpOptions
-        )
+        .get<{
+          data: any;
+        }>(`${environment.apiBaseUrl}/merchant-categories`)
         .pipe(map(({ data }) => data)),
     }).pipe(
       map(({ merchants, categories }) => [
         ...merchants.map((merchant: any) => ({ target: 'merchant' as const, ...merchant })),
         ...categories.map((category: any) => ({ target: 'category' as const, ...category })),
-      ])
+      ]),
     );
     this.projects$ = this.http
-      .get<{ data: any }>(`${environment.apiBaseUrl}/expense-projects`, environment.httpOptions)
+      .get<{ data: any }>(`${environment.apiBaseUrl}/expense-projects`)
       .pipe(map(({ data }) => data));
     this.filteredMerchants$ = this.merchants$;
   }
@@ -73,9 +92,9 @@ export class EditExpense implements OnInit {
       this.filteredMerchants$ = this.merchants$.pipe(
         map((merchants) =>
           merchants.filter((merchant) =>
-            isString(value) ? merchant.name.toLowerCase().includes(value.toLowerCase()) : true
-          )
-        )
+            isString(value) ? merchant.name.toLowerCase().includes(value.toLowerCase()) : true,
+          ),
+        ),
       );
     });
   }

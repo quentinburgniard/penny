@@ -2,7 +2,7 @@
   <mat-form-field>
     <mat-label>Choose a date</mat-label>
     <input matInput [matDatepicker]="picker" />
-    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-hint>DD/MM/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
@@ -18,16 +18,18 @@
     />
     <mat-autocomplete #merchant="matAutocomplete" [displayWith]="getMerchantName">
       <mat-optgroup label="Merchants">
-        @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) { @if
-        (merchant.target === 'merchant') {
-        <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
-        } }
+        @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) {
+          @if (merchant.target === 'merchant') {
+            <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
+          }
+        }
       </mat-optgroup>
       <mat-optgroup label="Categories">
-        @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) { @if
-        (merchant.target === 'category') {
-        <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
-        } }
+        @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) {
+          @if (merchant.target === 'category') {
+            <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
+          }
+        }
       </mat-optgroup>
     </mat-autocomplete>
   </mat-form-field>
@@ -47,7 +49,7 @@
       <mat-label>Currency</mat-label>
       <mat-select formControlName="currency">
         @for (currency of currencies; track currency) {
-        <mat-option [value]="currency">{{ currency }}</mat-option>
+          <mat-option [value]="currency">{{ currency }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -64,7 +66,7 @@
     />
     <mat-autocomplete #project="matAutocomplete">
       @for (project of projects$ | async; track project.id) {
-      <mat-option [value]="project">{{ project.name }}</mat-option>
+        <mat-option [value]="project">{{ project.name }}</mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>
