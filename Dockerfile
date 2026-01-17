@@ -1,9 +1,11 @@
-FROM node:22-alpine
+FROM node:24-alpine AS build
 ENV NODE_ENV=production
 WORKDIR /usr/src/app
 EXPOSE 80
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm ci
 COPY . .
-RUN npm run build
-CMD ["npm", "run", "start"]
+RUN npm run build -c production
+FROM nginx:alpine
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf

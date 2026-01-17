@@ -1,0 +1,9 @@
+.angular/
+.github/
+.vscode/
+node_modules/
+.editorconfig
+.gitignore
+Dockerfile
+eslint.config.js
+README.md

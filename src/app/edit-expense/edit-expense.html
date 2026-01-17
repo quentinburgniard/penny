@@ -10,18 +10,25 @@
   <mat-form-field class="w-full">
     <mat-label>Merchant or Category</mat-label>
     <input
-      formControlName="target"
+      formControlName="merchant"
       type="text"
       placeholder="Pick one"
       matInput
-      [matAutocomplete]="auto"
+      [matAutocomplete]="merchant"
     />
-    <mat-autocomplete #auto="matAutocomplete">
-      @for (merchant of merchants$ | async; track merchant.target + merchant.id) {
-      <mat-option [value]="{ target: merchant.target, id: merchant.id }">{{
-        merchant.name
-      }}</mat-option>
-      }
+    <mat-autocomplete #merchant="matAutocomplete" [displayWith]="getMerchantName">
+      <mat-optgroup label="Merchants">
+        @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) { @if
+        (merchant.target === 'merchant') {
+        <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
+        } }
+      </mat-optgroup>
+      <mat-optgroup label="Categories">
+        @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) { @if
+        (merchant.target === 'category') {
+        <mat-option [value]="merchant">{{ merchant.name }}</mat-option>
+        } }
+      </mat-optgroup>
     </mat-autocomplete>
   </mat-form-field>
 
@@ -45,4 +52,21 @@
       </mat-select>
     </mat-form-field>
   </div>
+
+  <mat-form-field class="w-full">
+    <mat-label>Project</mat-label>
+    <input
+      formControlName="project"
+      type="text"
+      placeholder="Pick one"
+      matInput
+      [matAutocomplete]="project"
+    />
+    <mat-autocomplete #project="matAutocomplete">
+      @for (project of projects$ | async; track project.id) {
+      <mat-option [value]="project">{{ project.name }}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  {{ _form.value | json }}
 </form>
