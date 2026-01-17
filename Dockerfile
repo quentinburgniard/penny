@@ -1,5 +1,4 @@
 FROM node:24-alpine AS build
-ENV NODE_ENV=production
 WORKDIR /usr/src/app
 EXPOSE 80
 COPY package.json package-lock.json ./
