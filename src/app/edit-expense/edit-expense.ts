@@ -4,18 +4,19 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable, filter, forkJoin, map, tap } from 'rxjs';
 import { isString } from 'lodash-es';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
 } from '@angular/material/core';
 import { environment } from '../../environments/environment';
+import { MatButton } from '@angular/material/button';
 
 const EURO_DATE_FORMATS = {
   parse: {
@@ -35,10 +36,11 @@ const EURO_DATE_FORMATS = {
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
+    MatInput,
+    MatSelect,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatButton,
   ],
   providers: [
     provideNativeDateAdapter(),

@@ -4,10 +4,11 @@ import { map, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'penny-expenses',
-  imports: [MatTableModule],
+  imports: [MatTableModule, NgxChartsModule],
   templateUrl: './expenses.html',
   styleUrl: './expenses.css',
 })
@@ -20,7 +21,9 @@ export class Expenses {
       .get<{
         data: any;
       }>(`${environment.apiBaseUrl}/expenses`, {
-        params: { populate: ['merchant', 'category', 'project'] },
+        params: {
+          populate: ['merchant', 'category', 'project'],
+        },
       })
       .pipe(map(({ data }) => data));
   }
