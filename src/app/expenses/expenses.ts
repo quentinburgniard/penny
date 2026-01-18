@@ -9,6 +9,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   selector: 'penny-expenses',
   imports: [MatTableModule, NgxChartsModule],
   templateUrl: './expenses.html',
+  host: { class: 'flex flex-col max-w-lg mx-auto my-4 gap-4' },
 })
 export class Expenses {
   protected readonly expenses$: Observable<any[]>;

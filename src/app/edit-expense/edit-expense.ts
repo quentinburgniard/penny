@@ -61,13 +61,30 @@ export class EditExpense implements OnInit {
     merchant: new FormControl<any | null>(null),
     amount: new FormControl<number | null>(null),
     date: new FormControl<Date | null>(null),
-    currency: new FormControl<'eur' | 'chf' | null>(null),
-    allocations: new FormGroup({
-      gift: new FormControl<number | null>(null),
-      reimbursement: new FormControl<number | null>(null),
+    currency: new FormControl<'eur' | 'chf' | null>('eur'),
+    allocations: new FormControl({
+      gift: null,
+      reimbursement: null,
     }),
-    project: new FormControl<number | null>(null),
+    project: new FormControl<any | null>(null),
   });
+
+  get value() {
+    const { date } = this._form.value;
+    return {
+      date: date?.toLocaleDateString('en-CA') ?? null,
+      target: this._form.value.merchant?.target ?? null,
+      merchant:
+        this._form.value.merchant?.target === 'merchant' ? this._form.value.merchant.id : null,
+      category:
+        this._form.value.merchant?.target === 'category' ? this._form.value.merchant.id : null,
+      amount: this._form.value.amount,
+      currency: this._form.value.currency,
+      project: this._form.value.project?.id ?? null,
+      giftRate: this._form.value.allocations?.gift ?? null,
+      reimbursementRate: this._form.value.allocations?.reimbursement ?? null,
+    };
+  }
 
   constructor(private readonly http: HttpClient) {
     this.merchants$ = forkJoin({
@@ -103,17 +120,25 @@ export class EditExpense implements OnInit {
     });
   }
 
-  getMerchantName(merchant: any): string {
-    return merchant ? merchant.name : '';
+  getName(value: any): string {
+    return value ? value.name : '';
   }
 
   save$(id?: number): Observable<any> {
     return id
-      ? this.http.put(`${environment.apiBaseUrl}/expenses/${id}`, this._form.value, {
-          withCredentials: true,
-        })
-      : this.http.post(`${environment.apiBaseUrl}/expenses`, this._form.value, {
-          withCredentials: true,
-        });
+      ? this.http.put(
+          `${environment.apiBaseUrl}/expenses/${id}`,
+          { data: this.value },
+          {
+            withCredentials: true,
+          },
+        )
+      : this.http.post(
+          `${environment.apiBaseUrl}/expenses`,
+          { data: this.value },
+          {
+            withCredentials: true,
+          },
+        );
   }
 }

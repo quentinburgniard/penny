@@ -1,7 +1,11 @@
-<form [formGroup]="_form" class="flex flex-col max-w-lg mx-auto my-4 gap-4">
+<form
+  [formGroup]="_form"
+  class="flex flex-col max-w-lg mx-auto my-4 gap-4"
+  (ngSubmit)="save$().subscribe()"
+>
   <mat-form-field>
     <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" />
+    <input matInput [formControl]="_form.controls.date" [matDatepicker]="picker" />
     <mat-hint>DD/MM/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -16,7 +20,7 @@
       matInput
       [matAutocomplete]="merchant"
     />
-    <mat-autocomplete #merchant="matAutocomplete" [displayWith]="getMerchantName">
+    <mat-autocomplete #merchant="matAutocomplete" [displayWith]="getName">
       <mat-optgroup label="Merchants">
         @for (merchant of filteredMerchants$ | async; track merchant.target + merchant.id) {
           @if (merchant.target === 'merchant') {
@@ -64,7 +68,7 @@
       matInput
       [matAutocomplete]="project"
     />
-    <mat-autocomplete #project="matAutocomplete">
+    <mat-autocomplete #project="matAutocomplete" [displayWith]="getName">
       @for (project of projects$ | async; track project.id) {
         <mat-option [value]="project">{{ project.name }}</mat-option>
       }
@@ -76,7 +80,5 @@
     [amount]="_form.controls.amount.value"
   ></penny-edit-expense-allocations>
 
-  {{ _form.value | json }}
-
-  <button matButton="filled">Add</button>
+  <button matButton="filled" type="submit">Add</button>
 </form>
