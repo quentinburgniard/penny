@@ -21,7 +21,6 @@ import { MatInputModule } from '@angular/material/input';
     },
   ],
   templateUrl: './edit-expense-allocations.html',
-  styleUrl: './edit-expense-allocations.css',
 })
 export class EditExpenseAllocations implements ControlValueAccessor {
   @Input() amount?: number | null;

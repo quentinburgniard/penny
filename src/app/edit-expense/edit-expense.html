@@ -72,8 +72,11 @@
   </mat-form-field>
 
   <penny-edit-expense-allocations
+    formControlName="allocations"
     [amount]="_form.controls.amount.value"
   ></penny-edit-expense-allocations>
+
+  {{ _form.value | json }}
 
   <button matButton="filled">Add</button>
 </form>

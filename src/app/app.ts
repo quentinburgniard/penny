@@ -7,7 +7,6 @@ import { Expenses } from './expenses/expenses';
   selector: 'penny-root',
   imports: [RouterOutlet, EditExpense, Expenses],
   templateUrl: './app.html',
-  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('penny');

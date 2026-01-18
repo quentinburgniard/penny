@@ -50,7 +50,6 @@ const EURO_DATE_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: EURO_DATE_FORMATS },
   ],
   templateUrl: './edit-expense.html',
-  styleUrl: './edit-expense.css',
 })
 export class EditExpense implements OnInit {
   currencies = ['eur', 'chf'] as const;
@@ -63,8 +62,10 @@ export class EditExpense implements OnInit {
     amount: new FormControl<number | null>(null),
     date: new FormControl<Date | null>(null),
     currency: new FormControl<'eur' | 'chf' | null>(null),
-    reimbursementRate: new FormControl<number | null>(null),
-    giftRate: new FormControl<number | null>(null),
+    allocations: new FormGroup({
+      gift: new FormControl<number | null>(null),
+      reimbursement: new FormControl<number | null>(null),
+    }),
     project: new FormControl<number | null>(null),
   });
 
