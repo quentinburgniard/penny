@@ -37,10 +37,9 @@ export class EditExpenseAllocations implements ControlValueAccessor {
 
   constructor() {
     this.form.valueChanges.subscribe((value) => {
-      this.onChange({
-        gift: value.gift ?? null,
-        reimbursement: value.reimbursement ?? null,
-      });
+      const gift = this.toBase100(value.gift ?? null);
+      const reimbursement = this.toBase100(value.reimbursement ?? null);
+      this.onChange({ gift, reimbursement });
       this.onTouched();
     });
   }
@@ -52,8 +51,8 @@ export class EditExpenseAllocations implements ControlValueAccessor {
     }
     this.form.setValue(
       {
-        gift: value.gift ?? null,
-        reimbursement: value.reimbursement ?? null,
+        gift: this.toBase12(value.gift ?? null),
+        reimbursement: this.toBase12(value.reimbursement ?? null),
       },
       { emitEvent: false },
     );
@@ -75,6 +74,20 @@ export class EditExpenseAllocations implements ControlValueAccessor {
     } else {
       this.form.enable({ emitEvent: false });
     }
+  }
+
+  private toBase12(value: number | null): number | null {
+    if (value === null) {
+      return null;
+    }
+    return Math.round(value * 12);
+  }
+
+  private toBase100(value: number | null): number | null {
+    if (value === null) {
+      return null;
+    }
+    return Math.round((value / 12) * 100) / 100;
   }
 
   get giftAmount(): number | undefined {
