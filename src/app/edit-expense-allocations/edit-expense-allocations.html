@@ -1,0 +1,21 @@
+<div [formGroup]="form">
+  <div>
+    <mat-slider min="0" max="12" step="1" discrete [displayWith]="getAllocationPercentage">
+      <input matSliderThumb formControlName="gift" />
+    </mat-slider>
+    <mat-form-field>
+      <mat-label>{{ giftAmount }}</mat-label>
+      <input matInput />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-slider min="0" max="12" step="1" discrete [displayWith]="getAllocationPercentage">
+      <input matSliderThumb formControlName="reimbursement" />
+    </mat-slider>
+    <mat-form-field>
+      <mat-label>{{ reimbursementAmount }}</mat-label>
+      <input matInput />
+    </mat-form-field>
+  </div>
+</div>

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { JsonPipe } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
@@ -14,7 +13,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 })
 export class Expenses {
   protected readonly expenses$: Observable<any[]>;
-  protected readonly columns: string[] = ['date', 'merchant', 'amount', 'project'];
+  protected readonly columns: string[] = ['date', 'merchant', 'amount'];
 
   constructor(private readonly http: HttpClient) {
     this.expenses$ = this.http
@@ -22,7 +21,7 @@ export class Expenses {
         data: any;
       }>(`${environment.apiBaseUrl}/expenses`, {
         params: {
-          populate: ['merchant', 'category', 'project'],
+          populate: ['merchant', 'category'],
         },
         withCredentials: true,
       })
