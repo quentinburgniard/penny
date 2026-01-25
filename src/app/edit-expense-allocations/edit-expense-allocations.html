@@ -1,5 +1,6 @@
 <div [formGroup]="form">
   <div>
+    Gift
     <mat-slider min="0" max="12" step="1" discrete [displayWith]="getAllocationPercentage">
       <input matSliderThumb formControlName="gift" />
     </mat-slider>
@@ -10,6 +11,7 @@
   </div>
 
   <div>
+    Reimbursement
     <mat-slider min="0" max="12" step="1" discrete [displayWith]="getAllocationPercentage">
       <input matSliderThumb formControlName="reimbursement" />
     </mat-slider>

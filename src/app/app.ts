@@ -1,11 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EditExpense } from './edit-expense/edit-expense';
-import { Expenses } from './expenses/expenses';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'penny-root',
-  imports: [RouterOutlet, EditExpense, Expenses],
+  imports: [RouterOutlet, MatToolbarModule],
   templateUrl: './app.html',
 })
 export class App {
