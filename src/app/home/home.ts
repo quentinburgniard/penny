@@ -1,21 +1,21 @@
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
 import dayjs from 'dayjs';
 
 @Component({
-  selector: 'penny-expenses',
-  imports: [MatTableModule, NgxChartsModule, MatIconModule, MatCardModule],
-  templateUrl: './expenses.html',
-  host: { class: 'flex flex-col gap-4' },
+  selector: 'penny-home',
+  imports: [MatCardModule, MatTableModule, AsyncPipe, CurrencyPipe],
+  templateUrl: './home.html',
+  host: { class: 'block' },
 })
-export class Expenses {
+export class Home {
   protected readonly expenses$: Observable<any[]>;
+  protected readonly total$: Observable<number>;
   protected readonly columns: string[] = ['date', 'merchant', 'amount'];
 
   constructor(private readonly http: HttpClient) {
@@ -30,6 +30,10 @@ export class Expenses {
         withCredentials: true,
       })
       .pipe(map(({ data }) => data));
+
+    this.total$ = this.expenses$.pipe(
+      map((items) => items.reduce((total, item) => total + Number(item.amount ?? 0), 0)),
+    );
   }
 
   protected formatDate(value: string | Date): string {

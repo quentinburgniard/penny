@@ -32,6 +32,7 @@
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@swimlane/ngx-charts": "^23.1.0",
+    "dayjs": "^1.11.12",
     "lodash-es": "^4.17.22",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0",
