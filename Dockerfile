@@ -1,9 +1,11 @@
 FROM node:24-alpine AS build
 WORKDIR /usr/src/app
 EXPOSE 80
+ARG VERSION=0.0.0
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+RUN echo "export const VERSION = '${VERSION}';" > src/app/version.ts
 RUN npm run build -c production
 FROM nginx:alpine
 COPY --from=build /usr/src/app/dist/penny/browser /usr/share/nginx/html
